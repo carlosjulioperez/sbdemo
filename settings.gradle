@@ -1,3 +1,5 @@
+include ':api'
+include ':util'
 include ':microservices:product-service'
 include ':microservices:price-service'
 include ':microservices:product-composite-service'

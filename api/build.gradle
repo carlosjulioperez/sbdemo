@@ -4,12 +4,20 @@ plugins {
 	id 'java'
 }
 
-group = 'ec.carper.microservices.core.product'
+group = 'ec.carper.microservices.api'
 version = '1.0.0-SNAPSHOT'
 sourceCompatibility = '1.11'
 
 repositories {
 	mavenCentral()
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
 }
 
 dependencies {
