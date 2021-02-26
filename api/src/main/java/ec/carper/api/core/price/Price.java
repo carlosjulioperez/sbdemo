@@ -28,6 +28,7 @@ public class Price {
       this.offerPriceInitialDate = null;
       this.offerPriceFinalDate = null;
       this.serviceAddress = null;
+      
     }
 
     public Price(int productId, int priceId, BigDecimal price, BigDecimal offerPrice, LocalDate offerPriceInitialDate, LocalDate offerPriceFinalDate, String serviceAddress) {

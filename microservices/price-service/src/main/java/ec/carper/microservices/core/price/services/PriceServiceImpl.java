@@ -1,6 +1,7 @@
 package ec.carper.microservices.core.price.services;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,9 +45,9 @@ public class PriceServiceImpl implements PriceService{
     }
 
     List<Price> list = new ArrayList<>();
-    list.add(new Price(productId, 1, new BigDecimal(5.55), new BigDecimal(4.44), "2021-01-01", "2020-01-31", serviceUtil.getServiceAddress()));
-    list.add(new Price(productId, 2, new BigDecimal(7.77), new BigDecimal(6.66), "2021-01-01", "2020-01-31", serviceUtil.getServiceAddress()));
-    list.add(new Price(productId, 3, new BigDecimal(9.99), new BigDecimal(8.88), "2021-01-01", "2020-01-31", serviceUtil.getServiceAddress())); 
+    list.add(new Price(productId, 1, new BigDecimal("5.55"), new BigDecimal("4.44"), LocalDate.parse("2021-01-01"), LocalDate.parse("2020-01-31"), serviceUtil.getServiceAddress()));
+    list.add(new Price(productId, 2, new BigDecimal("7.77"), new BigDecimal("6.66"), LocalDate.parse("2021-01-01"), LocalDate.parse("2020-01-31"), serviceUtil.getServiceAddress()));
+    list.add(new Price(productId, 3, new BigDecimal("9.99"), new BigDecimal("8.88"), LocalDate.parse("2021-01-01"), LocalDate.parse("2020-01-31"), serviceUtil.getServiceAddress())); 
 
     LOG.debug("/price response size: {}", list.size());
 
