@@ -3,21 +3,21 @@ package ec.carper.api.core.product;
 public class Product{
 
     private final int productId;
-    private final String nombre;
-    private final String descripcion;
+    private final String name;
+    private final String description;
     private final String serviceAddress;
 
     public Product() {
 		this.productId = 0;
-		this.nombre = null;
-		this.descripcion = null;
+		this.name = null;
+		this.description = null;
 		this.serviceAddress = null;
 	}
 
-	public Product(int productId, String nombre, String descripcion, String serviceAddress) {
+	public Product(int productId, String name, String description, String serviceAddress) {
 		this.productId = productId;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
+		this.name = name;
+		this.description = description;
 		this.serviceAddress = serviceAddress;
 	}
 
@@ -25,12 +25,12 @@ public class Product{
 		return productId;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public String getDescription() {
+		return description;
 	}
 
 	public String getServiceAddress() {
