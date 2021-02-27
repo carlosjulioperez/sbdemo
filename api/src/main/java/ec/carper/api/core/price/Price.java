@@ -11,10 +11,9 @@ public class Price {
     private final int priceId;
     private final BigDecimal price;
     private final BigDecimal offerPrice;
-
+    
     @JsonFormat(pattern="yyyy-MM-dd")
     private final LocalDate offerPriceInitialDate;
-
     @JsonFormat(pattern="yyyy-MM-dd")
     private final LocalDate offerPriceFinalDate;
 
@@ -23,8 +22,8 @@ public class Price {
     public Price() {
       this.productId = 0;
       this.priceId = 0;
-      this.price = new BigDecimal(0);
-      this.offerPrice = new BigDecimal(0);
+      this.price = new BigDecimal("0");
+      this.offerPrice = new BigDecimal("0");
       this.offerPriceInitialDate = null;
       this.offerPriceFinalDate = null;
       this.serviceAddress = null;

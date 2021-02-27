@@ -8,11 +8,11 @@ public class Product{
     private final String serviceAddress;
 
     public Product() {
-		this.productId = 0;
-		this.name = null;
-		this.description = null;
-		this.serviceAddress = null;
-	}
+      this.productId = 0;
+      this.name = null;
+      this.description = null;
+      this.serviceAddress = null;
+    }
 
 	public Product(int productId, String name, String description, String serviceAddress) {
 		this.productId = productId;
