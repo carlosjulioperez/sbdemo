@@ -26,4 +26,31 @@ public class ProductAggregate {
     this.serviceAddress = serviceAddress;
   }
 
+  public int getProductId() {
+    return productId;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public int getPriceId() {
+    return priceId;
+  }
+
+  public BigDecimal getActualPrice() {
+    return actualPrice;
+  }
+
+  public boolean getOffer() {
+    return offer;
+  }
+
+  public String getServiceAddress() {
+    return serviceAddress;
+  }
 }
