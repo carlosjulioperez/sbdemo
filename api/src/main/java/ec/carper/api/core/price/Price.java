@@ -40,4 +40,31 @@ public class Price {
       this.serviceAddress = serviceAddress;
     }
 
+    public int getProductId() {
+      return productId;
+    }
+
+    public int getPriceId() {
+      return priceId;
+    }
+
+    public BigDecimal getPrice() {
+      return price;
+    }
+
+    public BigDecimal getOfferPrice() {
+      return offerPrice;
+    }
+
+    public LocalDate getOfferPriceInitialDate() {
+      return offerPriceInitialDate;
+    }
+
+    public LocalDate getOfferPriceFinalDate() {
+      return offerPriceFinalDate;
+    }
+
+    public String getServiceAddress() {
+      return serviceAddress;
+    }
 }

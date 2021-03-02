@@ -1,6 +1,7 @@
 package ec.carper.api.composite.product;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author : carper
@@ -11,18 +12,14 @@ public class ProductAggregate {
   private final int productId;
   private final String name;
   private final String description;
-  private final int priceId;
-  private final BigDecimal actualPrice;
-  private final boolean offer;
-  private final String serviceAddress;
+  private final List<PriceSummary> prices; 
+  private final ServiceAddresses serviceAddress;
 
-  public ProductAggregate(int productId, String name, String description, int priceId, BigDecimal actualPrice, boolean offer, String serviceAddress) {
+  public ProductAggregate(int productId, String name, String description, List<PriceSummary> prices, ServiceAddresses serviceAddress) {
     this.productId = productId;
     this.name = name;
     this.description = description;
-    this.priceId = priceId;
-    this.actualPrice = actualPrice;
-    this.offer = offer;
+    this.prices = prices;
     this.serviceAddress = serviceAddress;
   }
 
@@ -38,19 +35,11 @@ public class ProductAggregate {
     return description;
   }
 
-  public int getPriceId() {
-    return priceId;
+  public List<PriceSummary> getPrices() {
+    return prices;
   }
 
-  public BigDecimal getActualPrice() {
-    return actualPrice;
-  }
-
-  public boolean getOffer() {
-    return offer;
-  }
-
-  public String getServiceAddress() {
+  public ServiceAddresses getServiceAddress() {
     return serviceAddress;
   }
 }
