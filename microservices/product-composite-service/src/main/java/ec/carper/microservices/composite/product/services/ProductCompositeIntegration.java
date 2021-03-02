@@ -53,7 +53,7 @@ public class ProductCompositeIntegration implements ProductService, PriceService
       this.mapper = mapper;
 
       productServiceUrl = "http://" + productServiceHost + ":" + productServicePort + "/product/";
-      priceServiceUrl   = "http://" + priceServiceHost + ":" + priceServicePort + "/price?productId = ";
+      priceServiceUrl   = "http://" + priceServiceHost + ":" + priceServicePort + "/price?productId=";
     }
     
     public Product getProduct(int productId) {
