@@ -48,3 +48,4 @@ out/
 [._]sw[a-p]
 
 act.sh
+.SpaceVim.d/

@@ -2,12 +2,12 @@ server.port: 7000
 server.error.include-message: always
 
 app:
-product-service:
-  host: localhost
-  port: 7001
-price-service:
-  host: localhost
-  port: 7002
+  product-service:
+    host: localhost
+    port: 7001
+  price-service:
+    host: localhost
+    port: 7002
 
 logging:
   level:
