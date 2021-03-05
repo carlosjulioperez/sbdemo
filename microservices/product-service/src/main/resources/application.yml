@@ -6,3 +6,7 @@ logging:
     root: INFO
     ec.carper: DEBUG
 
+---
+spring.profiles: docker
+
+server.port: 8080
