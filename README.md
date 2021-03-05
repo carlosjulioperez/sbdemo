@@ -1,34 +1,62 @@
 # sbdemo
 
-Generar los servicios (Java 11)
-$ ./gradlew build
+  + Generar los servicios (Java 11): 
+    $ ./gradlew build
 
-Iniciar los servicios:
-$ java -jar microservices/product-service/build/libs/*.jar &
-$ java -jar microservices/price-service/build/libs/*.jar &
-$ java -jar microservices/product-composite-service/build/libs/*.jar &
+  + Iniciar los servicios:
+    $ java -jar microservices/product-service/build/libs/*.jar &
+    $ java -jar microservices/price-service/build/libs/*.jar &
+    $ java -jar microservices/product-composite-service/build/libs/*.jar &
 
-Recibir solicitudes:
-$ curl http://localhost:7000/product-composite/1
-$ curl http://localhost:7001/product/123
-$ curl http://localhost:7002/price?productId=1
+  + *Recibir solicitudes:
+    $ curl http://localhost:7000/product-composite/1
+    $ curl http://localhost:7001/product/123
+    $ curl http://localhost:7002/price?productId=1
 
-Ejecutar las pruebas JUnit 5:
-$ ./gradlew test
+  + Ejecutar las pruebas JUnit 5:
+    $ ./gradlew test
 
-$ curl http://localhost:7000/product-composite/1 -s | jq .
+    $ curl http://localhost:7000/product-composite/1 -s | jq .
 
-Detener las instancias:
-$ kill $(jobs -p)
+  + Detener las instancias:
+    $ kill $(jobs -p)
 
-Generar un servicio específico:
-./gradlew :microservices:product-service:build
+  + Generar un servicio específico:
+    $ ./gradlew :microservices:product-service:build
 
-Generar Docker:
-$ cd microservices/product-service
-$ docker build -t product-service .
+  + Generar Docker:
+    $ cd microservices/product-service
+    $ docker build -t product-service .
 
-Pruebas con Docker:
+  + Listado
+    $ docker images | grep product-service
+
+  + Ejecutar el microservicio como contenedor:
+    $ docker run --rm -p8080:8080 -e "SPRING_PROFILES_ACTIVE=docker" product-service
+    $ curl localhost:8080/product/3
+
+    $ curl localhost:8080/product/1
+      {"productId":1,"name":"nombre-1","description":"descripcion-1","serviceAddress":"f7ab736462c5/172.17.0.2:8080"}
+
+  + Ejecutar el contenedor de forma separada (sin bloquear la terminal):
+    $ docker run -d -p8080:8080 -e "SPRING_PROFILES_ACTIVE=docker" --name my-prd-srv product-service
+      0a6d25adad499afbf9e728c80e4bbff172de5b0165f2d2e3fb2872249d9a4090
+
+    $ docker ps
+    CONTAINER ID   IMAGE             COMMAND                CREATED         STATUS         PORTS                    NAMES
+    0a6d25adad49   product-service   "java -jar /app.jar"   2 minutes ago   Up 2 minutes   0.0.0.0:8080->8080/tcp   my-prd-srv
+
+  + Obtener los logs de la imagen:
+    (-f, --tail 0, --since, --since 5m)
+    $ docker logs my-prd-srv -f
+
+    $ docker rm -f my-prd-srv
+
+  + Generar las imágenes docker-compose:
+    $ ./gradlew build docker-compose build
+
+============================================================
+Pruebas con Docker y Java 12:
 
 Equipo de desarrollo: MacBook Pro, 8GB Ram, 4 CPUs
 CPU (cores) disponibles:

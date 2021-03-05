@@ -14,3 +14,15 @@ logging:
     root: INFO
     ec.carper: DEBUG
 
+---
+spring.profiles: docker
+
+server.port: 8080
+
+app:
+  product-service:
+    host: localhost
+    port: 8080
+  price-service:
+    host: localhost
+    port: 8080
