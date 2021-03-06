@@ -53,7 +53,20 @@
     $ docker rm -f my-prd-srv
 
   + Generar las imágenes docker-compose:
-    $ ./gradlew build docker-compose build
+    $ ./gradlew build 
+    $ docker-compose build
+    
+  + Iniciar los microservicios:
+    $ docker-compose up -d
+
+  + Ver los logs:
+    $ docker-compose logs -f
+  
+  + Probar los servicios:
+    $ curl localhost:8080/product-composite/123 -s | jq .
+  
+  + Parar los servicios:
+    $ docker-compose down
 
 ============================================================
 Pruebas con Docker y Java 12:

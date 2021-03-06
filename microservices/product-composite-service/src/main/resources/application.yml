@@ -15,14 +15,13 @@ logging:
     ec.carper: DEBUG
 
 ---
-spring.profiles: docker
-
+spring.config.activate.on-profile: docker
 server.port: 8080
 
 app:
   product-service:
-    host: localhost
+    host: product
     port: 8080
   price-service:
-    host: localhost
+    host: price
     port: 8080
