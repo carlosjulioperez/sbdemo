@@ -68,6 +68,10 @@
   + Parar los servicios:
     $ docker-compose down
 
+  + Ejecutar todo:
+    $ ./gradlew build && docker-compose build && docker-compose up -d
+    $ curl localhost:8080/product-composite/123 -s | jq .
+  
 ============================================================
 Pruebas con Docker y Java 12:
 
