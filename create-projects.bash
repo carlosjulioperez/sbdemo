@@ -6,7 +6,7 @@ cd microservices
 spring init \
 --boot-version=2.4.3.RELEASE \
 --build=gradle \
---java-version=1.11 \
+--java-version=1.8 \
 --packaging=jar \
 --name=product-service \
 --package-name=ec.carper.microservices.core.product \
@@ -18,7 +18,7 @@ product-service
 spring init \
 --boot-version=2.4.3.RELEASE \
 --build=gradle \
---java-version=1.11 \
+--java-version=1.8 \
 --packaging=jar \
 --name=price-service \
 --package-name=ec.carper.microservices.core.price \
@@ -30,7 +30,7 @@ price-service
 spring init \
 --boot-version=2.4.3.RELEASE \
 --build=gradle \
---java-version=1.11 \
+--java-version=1.8 \
 --packaging=jar \
 --name=product-composite-service \
 --package-name=ec.carper.microservices.composite.product \

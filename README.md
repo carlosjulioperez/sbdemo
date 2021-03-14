@@ -71,7 +71,14 @@
   + Ejecutar todo:
     $ ./gradlew build && docker-compose build && docker-compose up -d
     $ curl localhost:8080/product-composite/123 -s | jq .
+
+  + Documentación Swagger:
+    http://localhost:8080/swagger-ui/index.html
   
+Gradle
+  Eliminar archivos de bloqueo
+  $ find ~/.gradle -type f -name "*.lock" -delete
+
 ============================================================
 Pruebas con Docker y Java 12:
 

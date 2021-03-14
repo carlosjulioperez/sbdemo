@@ -2,10 +2,10 @@ package ec.carper.api.core.product;
 
 public class Product{
 
-    private final int productId;
-    private final String name;
-    private final String description;
-    private final String serviceAddress;
+    private int productId;
+    private String name;
+    private String description;
+    private String serviceAddress;
 
     public Product() {
       this.productId = 0;
@@ -36,5 +36,21 @@ public class Product{
 	public String getServiceAddress() {
 		return serviceAddress;
 	}
+
+  public void setProductId(int productId) {
+    this.productId = productId;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public void setServiceAddress(String serviceAddress) {
+    this.serviceAddress = serviceAddress;
+  }
 
 }
