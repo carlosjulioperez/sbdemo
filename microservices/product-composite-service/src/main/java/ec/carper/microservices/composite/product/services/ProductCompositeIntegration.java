@@ -52,15 +52,31 @@ public class ProductCompositeIntegration implements ProductService, PriceService
       this.restTemplate = restTemplate;
       this.mapper = mapper;
 
-      productServiceUrl = "http://" + productServiceHost + ":" + productServicePort + "/product/";
-      priceServiceUrl   = "http://" + priceServiceHost + ":" + priceServicePort + "/price?productId=";
+      productServiceUrl = "http://" + productServiceHost + ":" + productServicePort + "/product";
+      priceServiceUrl   = "http://" + priceServiceHost + ":" + priceServicePort + "/price";
     }
     
-    public Product getProduct(int productId) {
+    @Override
+    public Product createProduct(Product body) {
 
       try {
-        String url = productServiceUrl + productId;
-        LOG.debug("Will call getProduct API on URL: {}", url);
+        String url = productServiceUrl;
+        LOG.debug("Will post a new product to URL: {}", url);
+
+        Product product = restTemplate.postForObject(url, body, Product.class);
+        LOG.debug("Created a product with id: {}", product.getProductId());
+
+        return product;
+
+      } catch (HttpClientErrorException ex) {
+        throw handleHttpClientException(ex);
+      }
+    }
+
+    public Product getProduct(int productId) {
+      try {
+        String url = productServiceUrl + "/" + productId;
+        LOG.debug("Will call the getProduct API on URL: {}", url);
 
         Product product = restTemplate.getForObject(url, Product.class);
         LOG.debug("Found a product with id: {}", product.getProductId());
@@ -68,37 +84,36 @@ public class ProductCompositeIntegration implements ProductService, PriceService
         return product;
 
       } catch (HttpClientErrorException ex) {
-
-        switch (ex.getStatusCode()) {
-
-          case NOT_FOUND:
-            throw new NotFoundException(getErrorMessage(ex));
-
-          case UNPROCESSABLE_ENTITY :
-            throw new InvalidInputException(getErrorMessage(ex));
-
-          default:
-            LOG.warn("Got a unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
-            LOG.warn("Error body: {}", ex.getResponseBodyAsString());
-            throw ex;
-        }
+        throw handleHttpClientException(ex);
       }
     }
 
-    private String getErrorMessage(HttpClientErrorException ex) {
+    @Override
+    public void deleteProduct(int productId) {
       try {
-        return mapper.readValue(ex.getResponseBodyAsString(), HttpErrorInfo.class).getMessage();
-      } catch (IOException ioex) {
-        return ex.getMessage();
+        String url = productServiceUrl + "/" + productId;
+        LOG.debug("Will call the deleteProduct API on URL: {}", url);
+
+        restTemplate.delete(url);
+
+      } catch (HttpClientErrorException ex) {
+        throw handleHttpClientException(ex);
       }
     }
+
+    // private String getErrorMessage(HttpClientErrorException ex) {
+      // try {
+        // return mapper.readValue(ex.getResponseBodyAsString(), HttpErrorInfo.class).getMessage();
+      // } catch (IOException ioex) {
+        // return ex.getMessage();
+      // }
+    // }
 
     public List<Price> getPrices(int productId) {
-
       try {
-        String url = priceServiceUrl + productId;
+        String url = priceServiceUrl + "?productId=" + productId;
 
-        LOG.debug("Will call getPrices API on URL: {}", url);
+        LOG.debug("Will call the getPrices API on URL: {}", url);
         List<Price> prices = restTemplate.exchange(url, GET, null, new ParameterizedTypeReference<List<Price>>() {}).getBody();
 
         LOG.debug("Found {} prices for a product with id: {}", prices.size(), productId);
@@ -110,5 +125,28 @@ public class ProductCompositeIntegration implements ProductService, PriceService
       }
     }
 
+    private RuntimeException handleHttpClientException(HttpClientErrorException ex) {
+      switch (ex.getStatusCode()) {
+
+        case NOT_FOUND:
+          return new NotFoundException(getErrorMessage(ex));
+
+        case UNPROCESSABLE_ENTITY :
+          return new InvalidInputException(getErrorMessage(ex));
+
+        default:
+          LOG.warn("Got a unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
+          LOG.warn("Error body: {}", ex.getResponseBodyAsString());
+          return ex;
+      }
+    }
+
+    private String getErrorMessage(HttpClientErrorException ex) {
+      try {
+        return mapper.readValue(ex.getResponseBodyAsString(), HttpErrorInfo.class).getMessage();
+      } catch (IOException ioex) {
+        return ex.getMessage();
+      }
+    }
 }
 
