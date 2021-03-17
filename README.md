@@ -1,44 +1,44 @@
 # sbdemo
 
-  + Generar los servicios (Java 11): 
+  * Generar los servicios (Java 11): 
     $ ./gradlew build
 
-  + Iniciar los servicios:
+  * Iniciar los servicios:
     $ java -jar microservices/product-service/build/libs/*.jar &
     $ java -jar microservices/price-service/build/libs/*.jar &
     $ java -jar microservices/product-composite-service/build/libs/*.jar &
 
-  + *Recibir solicitudes:
+  * *Recibir solicitudes:
     $ curl http://localhost:7000/product-composite/1
     $ curl http://localhost:7001/product/123
     $ curl http://localhost:7002/price?productId=1
 
-  + Ejecutar las pruebas JUnit 5:
+  * Ejecutar las pruebas JUnit 5:
     $ ./gradlew test
 
     $ curl http://localhost:7000/product-composite/1 -s | jq .
 
-  + Detener las instancias:
+  * Detener las instancias:
     $ kill $(jobs -p)
 
-  + Generar un servicio específico:
+  * Generar un servicio específico:
     $ ./gradlew :microservices:product-service:build
 
-  + Generar Docker:
+  * Generar Docker:
     $ cd microservices/product-service
     $ docker build -t product-service .
 
-  + Listado
+  * Listado
     $ docker images | grep product-service
 
-  + Ejecutar el microservicio como contenedor:
+  * Ejecutar el microservicio como contenedor:
     $ docker run --rm -p8080:8080 -e "SPRING_PROFILES_ACTIVE=docker" product-service
     $ curl localhost:8080/product/3
 
     $ curl localhost:8080/product/1
       {"productId":1,"name":"nombre-1","description":"descripcion-1","serviceAddress":"f7ab736462c5/172.17.0.2:8080"}
 
-  + Ejecutar el contenedor de forma separada (sin bloquear la terminal):
+  * Ejecutar el contenedor de forma separada (sin bloquear la terminal):
     $ docker run -d -p8080:8080 -e "SPRING_PROFILES_ACTIVE=docker" --name my-prd-srv product-service
       0a6d25adad499afbf9e728c80e4bbff172de5b0165f2d2e3fb2872249d9a4090
 
@@ -46,34 +46,37 @@
     CONTAINER ID   IMAGE             COMMAND                CREATED         STATUS         PORTS                    NAMES
     0a6d25adad49   product-service   "java -jar /app.jar"   2 minutes ago   Up 2 minutes   0.0.0.0:8080->8080/tcp   my-prd-srv
 
-  + Obtener los logs de la imagen:
+  * Obtener los logs de la imagen:
     (-f, --tail 0, --since, --since 5m)
     $ docker logs my-prd-srv -f
 
     $ docker rm -f my-prd-srv
 
-  + Generar las imágenes docker-compose:
+  * Generar las imágenes docker-compose:
     $ ./gradlew build 
     $ docker-compose build
     
-  + Iniciar los microservicios:
+  * Iniciar los microservicios:
     $ docker-compose up -d
 
-  + Ver los logs:
+  * Ver los logs:
     $ docker-compose logs -f
   
-  + Probar los servicios:
+  * Probar los servicios:
     $ curl localhost:8080/product-composite/123 -s | jq .
   
-  + Parar los servicios:
+  * Parar los servicios:
     $ docker-compose down
 
-  + Ejecutar todo:
+  * Ejecutar todo:
     $ ./gradlew build && docker-compose build && docker-compose up -d
     $ curl localhost:8080/product-composite/123 -s | jq .
 
-  + Documentación Swagger:
+  * Documentación Swagger:
     http://localhost:8080/swagger-ui/index.html
+
+  * Ejecutar test MongoDB:
+    $ ./gradlew microservices:product-service:test --tests PersistenceTests
   
 Gradle
   Eliminar archivos de bloqueo
