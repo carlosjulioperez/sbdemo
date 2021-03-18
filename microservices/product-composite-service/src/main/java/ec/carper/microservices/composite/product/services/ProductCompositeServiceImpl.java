@@ -42,14 +42,12 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
       Product product = new Product(body.getProductId(), body.getName(), body.getDescription(), null);
       integration.createProduct(product);
 
-/*
       if (body.getPrices() != null) {
         body.getPrices().forEach(r -> {
-          PriceSummary price = new PriceSummary(body.getProductId(), r.getActualPrice());
+          Price price = new Price(body.getProductId(), r.getPriceId(), r.getActualPrice(), null, null, null, "");
           integration.createPrice(price);
         });
       }
-*/
 
       LOG.debug("createCompositeProduct: composite entites created for productId: {}", body.getProductId());
 
