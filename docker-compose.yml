@@ -6,12 +6,16 @@ services:
     mem_limit: 350m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mongodb
 
   price:
     build: microservices/price-service
     mem_limit: 350m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mongodb
 
   product-composite:
     build: microservices/product-composite-service
@@ -20,3 +24,11 @@ services:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+
+  # $ mongo
+  mongodb:
+    image: mongo:3.6.9
+    mem_limit: 350m
+    ports:
+      - "27017:27017"
+    command: mongod --smallfiles
