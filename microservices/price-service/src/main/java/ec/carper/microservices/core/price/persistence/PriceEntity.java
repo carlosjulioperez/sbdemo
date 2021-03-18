@@ -1,20 +1,23 @@
 package ec.carper.microservices.core.price.persistence;
 
-import javax.persistence.*;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "prices", indexes = { @Index(name = "prices_unique_idx", unique = true, columnList = "productId,priceId") })
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection="prices")
+@CompoundIndex(name = "prod-pri-id", unique = true, def = "{'productId': 1, 'priceId' : 1}")
 public class PriceEntity {
 
-  @Id @GeneratedValue
-  private int id;
+  @Id
+  private String id;
 
   @Version
-  private int version;
+  private Integer version;
 
   private int productId;
   private int priceId;
@@ -29,7 +32,7 @@ public class PriceEntity {
   public PriceEntity() {
   }
 
-  public PriceEntity(int id, int version, int productId, int priceId, BigDecimal price, BigDecimal offerPrice, LocalDate offerPriceInitialDate, LocalDate offerPriceFinalDate) {
+  public PriceEntity(int productId, int priceId, BigDecimal price, BigDecimal offerPrice, LocalDate offerPriceInitialDate, LocalDate offerPriceFinalDate) {
     this.productId = productId;
     this.priceId = priceId;
     this.price = price;
@@ -38,6 +41,21 @@ public class PriceEntity {
     this.offerPriceFinalDate = offerPriceFinalDate;
   }
 
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setVersion(Integer version) {
+    this.version = version;
+  }
+
+  public Integer getVersion() {
+    return version;
+  }
 
   public void setProductId(int productId) {
     this.productId = productId;
@@ -86,4 +104,5 @@ public class PriceEntity {
   public LocalDate getOfferPriceFinalDate() {
     return offerPriceFinalDate;
   }
+
 }

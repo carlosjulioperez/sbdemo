@@ -5,17 +5,21 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import ec.carper.microservices.core.price.persistence.PriceEntity;
+import ec.carper.microservices.core.price.persistence.PriceRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.carper.api.core.price.Price;
 import ec.carper.api.core.price.PriceService;
 import ec.carper.util.exceptions.InvalidInputException;
 import ec.carper.util.http.ServiceUtil;
+
+import java.util.List;
 
 /**
  * @author : carper
@@ -27,11 +31,30 @@ public class PriceServiceImpl implements PriceService{
 
   private static final Logger LOG = LoggerFactory.getLogger(PriceServiceImpl.class);
 
+  private final PriceRepository repository;
+  private final PriceMapper mapper;
   private final ServiceUtil serviceUtil;
 
   @Autowired
-  public PriceServiceImpl(ServiceUtil serviceUtil) {
+  public PriceServiceImpl(PriceRepository repository, PriceMapper mapper, ServiceUtil serviceUtil) {
+    this.repository = repository;
+    this.mapper = mapper;
     this.serviceUtil = serviceUtil;
+  }
+
+  @Override
+  public Price createPrice(Price body) {
+    try {
+      PriceEntity entity = mapper.apiToEntity(body);
+      PriceEntity newEntity = repository.save(entity);
+
+      LOG.debug("createPrice: created a price entity: {}/{}", body.getProductId(), body.getPriceId());
+      return mapper.entityToApi(newEntity);
+
+    } catch (DataIntegrityViolationException dive) {
+      throw new InvalidInputException("Duplicate key, Product Id: " + body.getProductId() + ", Price Id:" + body.getPriceId());
+    }
+
   }
 
   @Override
@@ -53,6 +76,12 @@ public class PriceServiceImpl implements PriceService{
 
     return list;
   }
+
+  @Override
+    public void deletePrices(int productId) {
+        LOG.debug("deletePrices: tries to delete prices for the product with productId: {}", productId);
+        repository.deleteAll(repository.findByProductId(productId));
+    }
 
 
 }

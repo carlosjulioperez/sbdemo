@@ -21,8 +21,7 @@ api:
         # Normal response
         If the requested product id is found the method will return information regarding:
         1. Product information
-        1. Reviews
-        1. Recommendations
+        1. Prices 
         1. Service Addresses
         (technical information regarding the addresses of the microservices that created the response)
 

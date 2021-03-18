@@ -75,6 +75,7 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
   public void deleteCompositeProduct(int productId) {
     LOG.debug("deleteCompositeProduct: Deletes a product aggregate for productId: {}", productId);
     integration.deleteProduct(productId);
+    integration.deletePrices(productId);
     LOG.debug("getCompositeProduct: aggregate entities deleted for productId: {}", productId);
   }
 

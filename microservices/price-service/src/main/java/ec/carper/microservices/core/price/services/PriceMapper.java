@@ -10,19 +10,18 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface PriceMapper {
-  // TODO
 
-  // @Mappings({
-    // @Mapping(target = "serviceAddress", ignore = true)
-  // })
-  // Price entityToApi(PriceEntity entity);
-//
-  // @Mappings({
-    // @Mapping(target = "id", ignore = true),
-    // @Mapping(target = "version", ignore = true)
-  // })
-  // PriceEntity apiToEntity(Price api);
-//
-  // List<Price> entityListToApiList(List<PriceEntity> entity);
-  // List<PriceEntity> apiListToEntityList(List<Price> api);
+   @Mappings({
+     @Mapping(target = "serviceAddress", ignore = true)
+   })
+   Price entityToApi(PriceEntity entity);
+
+   @Mappings({
+     @Mapping(target = "id", ignore = true),
+     @Mapping(target = "version", ignore = true)
+   })
+   PriceEntity apiToEntity(Price api);
+
+   List<Price> entityListToApiList(List<PriceEntity> entity);
+   List<PriceEntity> apiListToEntityList(List<Price> api);
 }

@@ -101,6 +101,19 @@ public class ProductCompositeIntegration implements ProductService, PriceService
       }
     }
 
+    @Override
+    public void deletePrices(int productId) {
+        try {
+            String url = priceServiceUrl + "?productId=" + productId;
+            LOG.debug("Will call the deletePrice API on URL: {}", url);
+
+            restTemplate.delete(url);
+
+        } catch (HttpClientErrorException ex) {
+            throw handleHttpClientException(ex);
+        }
+    }
+
     // private String getErrorMessage(HttpClientErrorException ex) {
       // try {
         // return mapper.readValue(ex.getResponseBodyAsString(), HttpErrorInfo.class).getMessage();
@@ -108,6 +121,23 @@ public class ProductCompositeIntegration implements ProductService, PriceService
         // return ex.getMessage();
       // }
     // }
+
+    @Override
+    public Price createPrice(Price body) {
+
+      try {
+        String url = priceServiceUrl;
+        LOG.debug("Will post a new price to URL: {}", url);
+
+        Price price = restTemplate.postForObject(url, body, Price.class);
+        LOG.debug("Created a price with id: {}", price.getProductId());
+
+        return price;
+
+      } catch (HttpClientErrorException ex) {
+        throw handleHttpClientException(ex);
+      }
+    }
 
     public List<Price> getPrices(int productId) {
       try {
