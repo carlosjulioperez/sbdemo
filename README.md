@@ -77,6 +77,18 @@
 
   * Ejecutar test MongoDB:
     $ ./gradlew microservices:product-service:test --tests PersistenceTests
+
+  * Pruebas:
+    $ ./gradlew build && docker-compose build && docker-compose up
+
+    + Swagger   + Swagger::
+    productId: 12345 / Execute -> 200
+
+    $ docker-compose exec mongodb mongo product-db --quiet --eval "db.products.find()"
+      { "_id" : ObjectId("60540347fcb1ac0f31ed606f"), "version" : 0, "productId" : 12345, "name" : "string", "description" : "string", "_class" : "ec.carper.microservices.core.product.persistence.ProductEntity" }
+
+    $ docker-compose exec mongodb mongo price-db --quiet --eval "db.prices.find()"
+      { "_id" : ObjectId("6054034818278563c997a07b"), "version" : 0, "productId" : 12345, "priceId" : 0, "price" : "0", "_class" : "ec.carper.microservices.core.price.persistence.PriceEntity" }
   
 Gradle
   Eliminar archivos de bloqueo
